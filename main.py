@@ -9,36 +9,40 @@ from pynput import keyboard, mouse
 
 
 class AutoHoldClickException(Exception):
-    """AutoHoldClickの独自例外クラス
-    """
+    """AutoHoldClickの独自例外クラス"""
+
     def __init__(self, message):
         super().__init__(message)
 
+
 class Config:
     """設定を管理するクラス
-    
+
     JSON設定ファイル（デフォルトは 'config.json'）からトグルキーとマウスボタンの設定を読み込む。
     このクラスから、トグルキーとマウスボタンの設定を取得できる。
-    
+
     設定ファイルの例：
     {
         "toggle_key": "f6",
         "mouse_button": "left"
     }
-    
+
     Attributes:
         config_file (str): 設定ファイルのパス。
         logger (logging.Logger): ログ出力用のロガー。
         toggle_key (keyboard.Key): トグルキー。
         mouse_button (mouse.Button): マウスボタン。
     """
+
     TOGGLE_KEY_KEY = "toggle_key"
     MOUSE_BUTTON_KEY = "mouse_button"
     CONFIG_FILE_ENCODING = "utf-8"
-    
-    def __init__(self, config_file: str = "config.json", logger: logging.Logger = None) -> None:
+
+    def __init__(
+        self, config_file: str = "config.json", logger: logging.Logger = None
+    ) -> None:
         """初期化メソッド
-        
+
         Args:
             config_file (str): 設定ファイルのパス。デフォルトは 'config.json'。
             logger (logging.Logger): ログ出力用のロガー。
@@ -51,9 +55,9 @@ class Config:
 
     def load(self) -> None:
         """設定ファイルを読み込むメソッド
-        
+
         設定ファイルからトグルキーとマウスボタンの設定を読み込む。
-        
+
         Raises:
             AutoHoldClickException: 設定ファイルの読み込みに失敗した場合。
         """
@@ -61,22 +65,39 @@ class Config:
             with open(self.config_file, "r", encoding=self.CONFIG_FILE_ENCODING) as f:
                 self._config = json.load(f)
                 self.toggle_key = self._get_config_value_as_key(self.TOGGLE_KEY_KEY)
-                self.mouse_button = self._get_config_value_as_button(self.MOUSE_BUTTON_KEY)
-                print(Messages.CONFIG_LOAD_SUCCESS.format(toggle_key=self.toggle_key.name, mouse_button=self.mouse_button.name))
-                self._log_info(Messages.CONFIG_LOAD_SUCCESS.format(toggle_key=self.toggle_key, mouse_button=self.mouse_button))
+                self.mouse_button = self._get_config_value_as_button(
+                    self.MOUSE_BUTTON_KEY
+                )
+                print(
+                    Messages.CONFIG_LOAD_SUCCESS.format(
+                        toggle_key=self.toggle_key.name,
+                        mouse_button=self.mouse_button.name,
+                    )
+                )
+                self._log_info(
+                    Messages.CONFIG_LOAD_SUCCESS.format(
+                        toggle_key=self.toggle_key, mouse_button=self.mouse_button
+                    )
+                )
         except FileNotFoundError as e:
-            raise AutoHoldClickException(Messages.CONFIG_FILE_NOT_FOUND.format(file_path=self.config_file)) from e
+            raise AutoHoldClickException(
+                Messages.CONFIG_FILE_NOT_FOUND.format(file_path=self.config_file)
+            ) from e
         except json.JSONDecodeError as e:
-            raise AutoHoldClickException(Messages.CONFIG_INVALID_JSON.format(file_path=self.config_file)) from e
+            raise AutoHoldClickException(
+                Messages.CONFIG_INVALID_JSON.format(file_path=self.config_file)
+            ) from e
         except IOError as e:
-            raise AutoHoldClickException(Messages.CONFIG_LOAD_ERROR.format(error=e)) from e
-    
+            raise AutoHoldClickException(
+                Messages.CONFIG_LOAD_ERROR.format(error=e)
+            ) from e
+
     def _get_config_value(self, key: str) -> str:
         """設定値を取得するメソッド
-        
+
         Args:
             key (str): 設定項目のキー。
-        
+
         Returns:
             str: 設定値。
         """
@@ -89,10 +110,10 @@ class Config:
 
     def _get_config_value_as_key(self, key: str) -> keyboard.Key:
         """設定値をkeyboard.Keyとして取得するメソッド
-        
+
         Args:
             key (str): 設定項目のキー。
-        
+
         Returns:
             keyboard.Key: キー。
         """
@@ -100,14 +121,16 @@ class Config:
         try:
             return getattr(keyboard.Key, value.lower())
         except AttributeError as e:
-            raise AutoHoldClickException(Messages.CONFIG_INVALID_VALUE.format(key=key, value=value)) from e
-    
+            raise AutoHoldClickException(
+                Messages.CONFIG_INVALID_VALUE.format(key=key, value=value)
+            ) from e
+
     def _get_config_value_as_button(self, key: str) -> mouse.Button:
         """設定値をmouse.Buttonとして取得するメソッド
-        
+
         Args:
             key (str): 設定項目のキー。
-        
+
         Returns:
             mouse.Button: ボタン。
         """
@@ -115,29 +138,33 @@ class Config:
         try:
             return getattr(mouse.Button, value.lower())
         except AttributeError as e:
-            raise AutoHoldClickException(Messages.CONFIG_INVALID_VALUE.format(key=key, value=value)) from e
-    
+            raise AutoHoldClickException(
+                Messages.CONFIG_INVALID_VALUE.format(key=key, value=value)
+            ) from e
+
     def _log_info(self, message: str) -> None:
         """INFOログ出力メソッド
-        
+
         Args:
             message (str): ログメッセージ。
         """
         if self.logger:
             self.logger.info(message)
 
+
 class AutoClicker:
     """自動クリックを管理するクラス
-    
+
     Attributes:
         config (Config): 設定クラスのインスタンス。
         logger (logging.Logger): ログ出力用のロガー。
         mouse_controller (pynput.mouse.Controller): マウス操作用のコントローラー。
         clicking (bool): クリック状態を示すフラグ。
-    """    
+    """
+
     def __init__(self, config: Config, logger: logging.Logger = None) -> None:
         """初期化メソッド
-        
+
         Args:
             config (Config): 設定クラスのインスタンス。
             logger (logging.Logger): ログ出力用のロガー。
@@ -146,10 +173,10 @@ class AutoClicker:
         self.logger = logger
         self.mouse_controller = mouse.Controller()
         self.clicking = False
-    
+
     def run(self) -> None:
         """自動クリックを開始するメソッド
-        
+
         トグルキーが押されたときにクリックをON/OFFする。
         Ctrl+Cで終了する。
         """
@@ -166,14 +193,14 @@ class AutoClicker:
                 print(f"\n[{Messages.CTRL_C_PRESSED}]")
                 if self.logger:
                     self.logger.info(Messages.CTRL_C_PRESSED)
-                self.release_click()  
+                self.release_click()
 
     def on_press(self, key: keyboard.Key) -> None:
         """キーが押されたときの処理
-        
+
         クリック状態を切り替える。
         クリックがONのときはOFFに、OFFのときはONにする。
-        
+
         Args:
             key (keyboard.Key): 押されたキー。
         """
@@ -185,7 +212,7 @@ class AutoClicker:
 
     def release_click(self) -> None:
         """クリックを解除するメソッド
-        
+
         クリックがONのときはOFFにする。
         """
         if self.clicking:
@@ -193,7 +220,11 @@ class AutoClicker:
             self.clicking = False
             print(Messages.CLICK_STOP.format(button_name=self.config.mouse_button.name))
             if self.logger:
-                self.logger.debug(Messages.CLICK_STOP_LOG.format(button_name=self.config.mouse_button.name))
+                self.logger.debug(
+                    Messages.CLICK_STOP_LOG.format(
+                        button_name=self.config.mouse_button.name
+                    )
+                )
 
     def _start_clicking(self) -> None:
         """クリックを開始するヘルパーメソッド。"""
@@ -201,7 +232,11 @@ class AutoClicker:
         self.clicking = True
         print(Messages.CLICK_START.format(button_name=self.config.mouse_button.name))
         if self.logger:
-            self.logger.debug(Messages.CLICK_START_LOG.format(button_name=self.config.mouse_button.name))
+            self.logger.debug(
+                Messages.CLICK_START_LOG.format(
+                    button_name=self.config.mouse_button.name
+                )
+            )
 
     def _stop_clicking(self) -> None:
         """クリックを停止するヘルパーメソッド。"""
@@ -209,13 +244,19 @@ class AutoClicker:
         self.clicking = False
         print(Messages.CLICK_STOP.format(button_name=self.config.mouse_button.name))
         if self.logger:
-            self.logger.debug(Messages.CLICK_STOP_LOG.format(button_name=self.config.mouse_button.name))
+            self.logger.debug(
+                Messages.CLICK_STOP_LOG.format(
+                    button_name=self.config.mouse_button.name
+                )
+            )
+
 
 class Messages:
     """メッセージ定数をまとめたクラス。
 
     このクラスは、アプリケーション内で使用されるメッセージを一元管理します。
     """
+
     # 一般メッセージ
     START_PROCESS = "処理開始"
     END_PROCESS = "処理終了"
@@ -238,20 +279,27 @@ class Messages:
     CLICK_STOP_LOG = "{button_name}クリックを解除しました。"
 
     # ログ関連メッセージ
-    LOGGER_LOAD_ERROR = "ログ設定ファイルの読み込み中にエラーが発生しました。パス：{file_path}"
+    LOGGER_LOAD_ERROR = (
+        "ログ設定ファイルの読み込み中にエラーが発生しました。パス：{file_path}"
+    )
     LOGGER_FILE_NOT_FOUND = "ログ設定ファイルが見つかりません。パス：{file_path}"
     LOGGER_INVALID_JSON = "ログ設定ファイルがJSON形式ではありません。パス：{file_path}"
 
     # 例外メッセージ
-    UNEXPECTED_ERROR = "ツール実行中に予期せぬ例外が発生しました。エラーメッセージ：{error}"
+    UNEXPECTED_ERROR = (
+        "ツール実行中に予期せぬ例外が発生しました。エラーメッセージ：{error}"
+    )
     SPECIFIC_ERROR = "ツール実行中に例外が発生しました。エラーメッセージ：{error}"
+
 
 class ExitCodes:
     """終了コードを定数として管理するクラス"""
+
     SUCCESS = 0
     LOGGER_LOAD_FAILURE = 1
     SPECIFIC_ERROR = 2
     UNEXPECTED_ERROR = 3
+
 
 def get_logger(log_settings_file_path: str) -> logging.Logger:
     """
@@ -272,11 +320,18 @@ def get_logger(log_settings_file_path: str) -> logging.Logger:
         logging.config.dictConfig(log_settings)
         return logging.getLogger(__name__)
     except FileNotFoundError as e:
-        raise AutoHoldClickException(Messages.LOGGER_FILE_NOT_FOUND.format(file_path=log_settings_file_path)) from e
+        raise AutoHoldClickException(
+            Messages.LOGGER_FILE_NOT_FOUND.format(file_path=log_settings_file_path)
+        ) from e
     except json.JSONDecodeError as e:
-        raise AutoHoldClickException(Messages.LOGGER_INVALID_JSON.format(file_path=log_settings_file_path)) from e
+        raise AutoHoldClickException(
+            Messages.LOGGER_INVALID_JSON.format(file_path=log_settings_file_path)
+        ) from e
     except IOError as e:
-        raise AutoHoldClickException(Messages.LOGGER_LOAD_ERROR.format(file_path=log_settings_file_path)) from e
+        raise AutoHoldClickException(
+            Messages.LOGGER_LOAD_ERROR.format(file_path=log_settings_file_path)
+        ) from e
+
 
 def main() -> None:
     """メイン関数"""
@@ -290,7 +345,7 @@ def main() -> None:
     except Exception as e:
         print(Messages.UNEXPECTED_ERROR.format(error=e))
         sys.exit(ExitCodes.UNEXPECTED_ERROR)
-    
+
     return_code = ExitCodes.SUCCESS
     try:
         logger.info(Messages.START_PROCESS)
@@ -307,8 +362,9 @@ def main() -> None:
         return_code = ExitCodes.UNEXPECTED_ERROR
     finally:
         logger.info(Messages.END_PROCESS)
-    
+
     sys.exit(return_code)
+
 
 if __name__ == "__main__":
     main()
