@@ -76,10 +76,11 @@ class Config:
                         mouse_button=self.mouse_button.name,
                     )
                 )
-                self._log_info(
+                log_info(
+                    self.logger,
                     Messages.CONFIG_LOAD_SUCCESS.format(
                         toggle_key=self.toggle_key, mouse_button=self.mouse_button
-                    )
+                    ),
                 )
         except FileNotFoundError as e:
             raise AutoHoldClickException(
@@ -144,15 +145,6 @@ class Config:
                 Messages.CONFIG_INVALID_VALUE.format(key=key, value=value)
             ) from e
 
-    def _log_info(self, message: str) -> None:
-        """INFOログ出力メソッド
-
-        Args:
-            message (str): ログメッセージ。
-        """
-        if self.logger:
-            self.logger.info(message)
-
 
 class AutoClicker:
     """自動クリックを管理するクラス
@@ -183,8 +175,7 @@ class AutoClicker:
         Ctrl+Cで終了する。
         """
         print(Messages.WAIT_FOR_TOGGLE_KEY)
-        if self.logger:
-            self.logger.info(Messages.WAIT_FOR_TOGGLE_KEY)
+        log_info(self.logger, Messages.WAIT_FOR_TOGGLE_KEY)
         atexit.register(self.release_click)
 
         with keyboard.Listener(on_press=self.on_press):
@@ -193,8 +184,7 @@ class AutoClicker:
                     time.sleep(0.1)
             except KeyboardInterrupt:
                 print(f"\n[{Messages.CTRL_C_PRESSED}]")
-                if self.logger:
-                    self.logger.info(Messages.CTRL_C_PRESSED)
+                log_info(self.logger, Messages.CTRL_C_PRESSED)
                 self.release_click()
 
     def on_press(self, key: keyboard.Key) -> None:
@@ -218,39 +208,27 @@ class AutoClicker:
         クリックがONのときはOFFにする。
         """
         if self.clicking:
-            self.mouse_controller.release(self.config.mouse_button)
-            self.clicking = False
-            print(Messages.CLICK_STOP.format(button_name=self.config.mouse_button.name))
-            if self.logger:
-                self.logger.debug(
-                    Messages.CLICK_STOP_LOG.format(
-                        button_name=self.config.mouse_button.name
-                    )
-                )
+            self._stop_clicking()
 
     def _start_clicking(self) -> None:
         """クリックを開始するヘルパーメソッド。"""
         self.mouse_controller.press(self.config.mouse_button)
         self.clicking = True
         print(Messages.CLICK_START.format(button_name=self.config.mouse_button.name))
-        if self.logger:
-            self.logger.debug(
-                Messages.CLICK_START_LOG.format(
-                    button_name=self.config.mouse_button.name
-                )
-            )
+        log_debug(
+            self.logger,
+            Messages.CLICK_START_LOG.format(button_name=self.config.mouse_button.name),
+        )
 
     def _stop_clicking(self) -> None:
         """クリックを停止するヘルパーメソッド。"""
         self.mouse_controller.release(self.config.mouse_button)
         self.clicking = False
         print(Messages.CLICK_STOP.format(button_name=self.config.mouse_button.name))
-        if self.logger:
-            self.logger.debug(
-                Messages.CLICK_STOP_LOG.format(
-                    button_name=self.config.mouse_button.name
-                )
-            )
+        log_debug(
+            self.logger,
+            Messages.CLICK_STOP_LOG.format(button_name=self.config.mouse_button.name),
+        )
 
 
 class Messages:
@@ -298,9 +276,8 @@ class ExitCodes:
     """終了コードを定数として管理するクラス"""
 
     SUCCESS = 0
-    LOGGER_LOAD_FAILURE = 1
-    SPECIFIC_ERROR = 2
-    UNEXPECTED_ERROR = 3
+    SPECIFIC_ERROR = 1
+    UNEXPECTED_ERROR = 2
 
 
 def get_logger(log_settings_file_path: str) -> logging.Logger:
@@ -337,35 +314,64 @@ def get_logger(log_settings_file_path: str) -> logging.Logger:
 
 def main() -> None:
     """メイン関数"""
-    print(Messages.START_PROCESS)
     try:
         logger = get_logger("log_settings.json")
     except AutoHoldClickException as e:
         print(Messages.LOGGER_LOAD_ERROR.format(file_path="log_settings.json"))
         print(f"エラーメッセージ：{e}")
-        sys.exit(ExitCodes.LOGGER_LOAD_FAILURE)
+        logger = None
     except Exception as e:
         print(Messages.UNEXPECTED_ERROR.format(error=e))
-        sys.exit(ExitCodes.UNEXPECTED_ERROR)
+        logger = None
 
     return_code = ExitCodes.SUCCESS
     try:
-        logger.info(Messages.START_PROCESS)
+        log_info(logger, Messages.START_PROCESS)
         config = Config(logger=logger)
         config.load()
 
         auto_clicker = AutoClicker(config=config, logger=logger)
         auto_clicker.run()
     except AutoHoldClickException as e:
-        logger.exception(Messages.SPECIFIC_ERROR.format(error=e))
+        log_exception(logger, Messages.SPECIFIC_ERROR.format(error=e))
         return_code = ExitCodes.SPECIFIC_ERROR
     except Exception as e:
-        logger.exception(Messages.UNEXPECTED_ERROR.format(error=e))
+        log_exception(logger, Messages.UNEXPECTED_ERROR.format(error=e))
         return_code = ExitCodes.UNEXPECTED_ERROR
     finally:
-        logger.info(Messages.END_PROCESS)
+        log_info(logger, Messages.END_PROCESS)
 
     sys.exit(return_code)
+
+
+def log_info(logger: logging.Logger, message: str) -> None:
+    """INFOログ出力メソッド
+
+    Args:
+        message (str): ログメッセージ。
+    """
+    if logger:
+        logger.info(message)
+
+
+def log_exception(logger: logging.Logger, message: str) -> None:
+    """EXCEPTIONログ出力メソッド
+
+    Args:
+        message (str): ログメッセージ。
+    """
+    if logger:
+        logger.exception(message)
+
+
+def log_debug(logger: logging.Logger, message: str) -> None:
+    """DEBUGログ出力メソッド
+
+    Args:
+        message (str): ログメッセージ。
+    """
+    if logger:
+        logger.debug(message)
 
 
 if __name__ == "__main__":
