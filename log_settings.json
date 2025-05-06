@@ -17,25 +17,18 @@
             "when": "midnight",
             "interval": 1,
             "encoding": "utf-8"
-        },
-
-        "consoleHandler": {
-            "class": "logging.StreamHandler",
-            "level": "ERROR",
-            "formatter": "fileFormatter",
-            "stream": "ext://sys.stdout"
         }
     },
 
     "loggers": {
         "__main__": {
             "level": "DEBUG",
-            "handlers": ["fileHandler", "consoleHandler"],
+            "handlers": ["fileHandler"],
             "propagate": false
         }
     },
 
     "root": {
-        "level": "INFO"
+        "level": "DEBUG"
     }
 }
