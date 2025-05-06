@@ -1,10 +1,12 @@
-import json
 import atexit
-import sys
-import time
+import json
 import logging
 import logging.config
+import sys
+import time
+
 from pynput import keyboard, mouse
+
 
 class AutoHoldClickException(Exception):
     """AutoHoldClickの独自例外クラス
