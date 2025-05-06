@@ -79,7 +79,7 @@ class Config:
                 log_info(
                     self.logger,
                     Messages.CONFIG_LOAD_SUCCESS.format(
-                        toggle_key=self.toggle_key, mouse_button=self.mouse_button
+                        toggle_key=self.toggle_key.name, mouse_button=self.mouse_button.name
                     ),
                 )
         except FileNotFoundError as e:
@@ -92,7 +92,7 @@ class Config:
             ) from e
         except IOError as e:
             raise AutoHoldClickException(
-                Messages.CONFIG_LOAD_ERROR.format(error=e)
+                Messages.CONFIG_LOAD_IO_ERROR.format(error=e)
             ) from e
 
     def _get_config_value(self, key: str) -> str:
@@ -246,11 +246,11 @@ class Messages:
     # 設定関連メッセージ
     CONFIG_LOAD_SUCCESS = "設定ファイルの読み込みに成功しました: トグルキー={toggle_key}, マウスボタン={mouse_button}"
     CONFIG_FILE_NOT_FOUND = "設定ファイルが見つかりません。パス：{file_path}"
-    CONFIG_INVALID_JSON = "設定ファイルのJSON形式が正しくありません。パス：{file_path}"
-    CONFIG_LOAD_ERROR = "設定ファイルの読み込み中にエラーが発生しました: {error}"
+    CONFIG_INVALID_JSON = "設定ファイルのJSON形式が不正です。パス：{file_path}"
+    CONFIG_LOAD_IO_ERROR = "設定ファイルの読み込み中にIOエラーが発生しました: {error}"
     CONFIG_KEY_NOT_FOUND = "設定項目が見つかりません。設定項目：{key}"
     CONFIG_EMPTY_VALUE = "設定項目の値が空です。設定項目：{key}"
-    CONFIG_INVALID_VALUE = "設定項目の値が不正です。設定項目：{key} 設定値：{value}"
+    CONFIG_INVALID_VALUE = "設定項目の値が不正です。設定項目：{key}, 設定値：{value}"
 
     # クリック関連メッセージ
     CLICK_START = "[{button_name}クリック開始]"
@@ -259,11 +259,17 @@ class Messages:
     CLICK_STOP_LOG = "{button_name}クリックを解除しました。"
 
     # ログ関連メッセージ
-    LOGGER_LOAD_ERROR = (
-        "ログ設定ファイルの読み込み中にエラーが発生しました。パス：{file_path}"
+    LOGGER_LOAD_SPECIFIC_ERROR = (
+        "ログ設定ファイルの読み込み中に例外が発生しました。パス：{file_path}"
+    )
+    LOGGER_LOAD_UNEXPECTED_ERROR = (
+        "ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス：{file_path}"
     )
     LOGGER_FILE_NOT_FOUND = "ログ設定ファイルが見つかりません。パス：{file_path}"
-    LOGGER_INVALID_JSON = "ログ設定ファイルがJSON形式ではありません。パス：{file_path}"
+    LOGGER_INVALID_JSON = "ログ設定ファイルのJSON形式が不正です。パス：{file_path}"
+    LOGGER_LOAD_IO_ERROR = (
+        "ログ設定ファイルの読み込み中にIOエラーが発生しました。パス：{file_path}"
+    )
 
     # 例外メッセージ
     UNEXPECTED_ERROR = (
@@ -308,20 +314,24 @@ def get_logger(log_settings_file_path: str) -> logging.Logger:
         ) from e
     except IOError as e:
         raise AutoHoldClickException(
-            Messages.LOGGER_LOAD_ERROR.format(file_path=log_settings_file_path)
+            Messages.LOGGER_LOAD_IO_ERROR.format(file_path=log_settings_file_path)
         ) from e
 
 
 def main() -> None:
     """メイン関数"""
+    log_file_path = "log_settings.json"
     try:
-        logger = get_logger("log_settings.json")
+        logger = get_logger(log_file_path)
     except AutoHoldClickException as e:
-        print(Messages.LOGGER_LOAD_ERROR.format(file_path="log_settings.json"))
+        print(Messages.LOGGER_LOAD_SPECIFIC_ERROR.format(file_path=log_file_path))
         print(f"エラーメッセージ：{e}")
         logger = None
     except Exception as e:
-        print(Messages.UNEXPECTED_ERROR.format(error=e))
+        print(
+            Messages.LOGGER_LOAD_UNEXPECTED_ERROR.format(file_path="log_settings.json")
+        )
+        print(f"エラーメッセージ：{e}")
         logger = None
 
     return_code = ExitCodes.SUCCESS
@@ -333,9 +343,11 @@ def main() -> None:
         auto_clicker = AutoClicker(config=config, logger=logger)
         auto_clicker.run()
     except AutoHoldClickException as e:
+        print(Messages.SPECIFIC_ERROR.format(error=e))
         log_exception(logger, Messages.SPECIFIC_ERROR.format(error=e))
         return_code = ExitCodes.SPECIFIC_ERROR
     except Exception as e:
+        print(Messages.UNEXPECTED_ERROR.format(error=e))
         log_exception(logger, Messages.UNEXPECTED_ERROR.format(error=e))
         return_code = ExitCodes.UNEXPECTED_ERROR
     finally:
