@@ -1,0 +1,34 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "formatters": {
+        "fileFormatter": {
+            "format": "%(asctime)s [%(levelname)s] %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S"
+        }
+    },
+
+    "handlers": {
+        "fileHandler": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "level": "INFO",
+            "formatter": "fileFormatter",
+            "filename": "./log/AutoHoldClick.log",
+            "when": "midnight",
+            "interval": 1,
+            "encoding": "utf-8"
+        }
+    },
+
+    "loggers": {
+        "__main__": {
+            "level": "DEBUG",
+            "handlers": ["fileHandler"],
+            "propagate": false
+        }
+    },
+
+    "root": {
+        "level": "DEBUG"
+    }
+}
