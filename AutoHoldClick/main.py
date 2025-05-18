@@ -1,4 +1,8 @@
-"""AutoHoldClick"""
+"""AutoHoldClick
+
+Copyright (c) 2025 Shinoryo
+Licensed under the MIT License
+"""
 
 import atexit
 import json
