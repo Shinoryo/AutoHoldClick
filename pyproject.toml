@@ -1,4 +1,4 @@
-﻿# 一般的に無視されがちなさまざまなディレクトリを除外する
+﻿[tool.ruff]
 exclude = [
     ".bzr",
     ".direnv",
@@ -14,7 +14,7 @@ exclude = [
     ".svn",
     ".tox",
     ".venv",
-    ".vscode", # VSCode設定
+    ".vscode",
     "__pypackages__",
     "_build",
     "buck-out",
@@ -23,37 +23,16 @@ exclude = [
     "node_modules",
     "venv",
 ]
-
-# Blackと同じ
 line-length = 88
 indent-width = 4
-
-# Python 3.11を想定
 target-version = "py311"
 
-[lint]
+[tool.ruff.lint]
 select = ["ALL"]
-ignore = [
-    "D",    # Docstringを書かなくてもよいようにする
-    "T201", # 'print()'を使えるようにする
-]
+ignore = ["BLE001", "D", "INP001", "T201", "TRY401"]
 
-# 自動修正の許可設定
-fixable = ["ALL"]
-unfixable = []
-
-# _で始まる変数については、未使用の変数を許可する
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-
-[format]
-# 文字列にはダブルクォートを使用する
+[tool.ruff.format]
 quote-style = "double"
-
-# スペースを使用してインデントし、タブを使用しない
 indent-style = "space"
-
-# list等の最後の要素の後のコンマを削除しない
 skip-magic-trailing-comma = false
-
-# 改行コードはCRLF
 line-ending = "cr-lf"
