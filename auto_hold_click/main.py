@@ -61,13 +61,20 @@ def parse_arguments() -> argparse.Namespace:
 
     Returns:
         argparse.Namespace: パースされた引数
+
+    Raises:
+        SystemExit: 必須引数が不足している場合
     """
-    parser = argparse.ArgumentParser(description="AutoHoldClick")
+    parser = argparse.ArgumentParser(
+        description="AutoHoldClick",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
     parser.add_argument(
         "--config",
         type=str,
         required=True,
         help="設定ファイルのパス (必須)",
+        metavar="CONFIG_FILE",
     )
     parser.add_argument(
         "--log-settings",
@@ -77,11 +84,10 @@ def parse_arguments() -> argparse.Namespace:
             "ログ設定ファイルのパス (任意)。"
             "指定しない場合は標準出力のみでログファイルは生成されません。"
         ),
+        metavar="LOG_CONFIG_FILE",
     )
-    # 未定義の引数が指定されても無視する
-    args, unknown = parser.parse_known_args()
-    if not args.config:
-        parser.error("エラー: --config オプションは必須です。設定ファイルのパスを指定してください。")
+
+    args, _ = parser.parse_known_args()
     return args
 
 
@@ -117,16 +123,18 @@ def main() -> None:
     Returns:
         None
     """
-    try:
-        # 引数の取得と設定ファイルパスの抽出
-        args = parse_arguments()
-        log_file_path = args.log_settings
-        config_file_path = args.config
+    logger_helper = None
+    return_code = ExitCodes.SUCCESS
 
+    # 引数の取得と設定ファイルパスの抽出
+    args = parse_arguments()
+    log_file_path = args.log_settings
+    config_file_path = args.config
+
+    try:
         # ロガーの初期化(ファイル指定時はファイル設定、未指定時は標準出力のみ)
         logger = initialize_logger(log_file_path)
         logger_helper = LoggerHelper(logger)
-        return_code = ExitCodes.SUCCESS
 
         # 処理開始ログ
         logger_helper.info(Messages.START_PROCESS)
