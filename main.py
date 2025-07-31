@@ -379,6 +379,8 @@ def log_exception(logger: logging.Logger, message: str) -> None:
     """
     if logger:
         logger.exception(message)
+    else:
+        print(message, file=sys.stderr)
 
 
 def log_debug(logger: logging.Logger, message: str) -> None:
