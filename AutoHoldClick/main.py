@@ -10,13 +10,12 @@ import logging
 import logging.config
 import sys
 
-from auto_clicker import AutoClicker
-from exceptions import AutoHoldClickException
-from exit_codes import ExitCodes
-from logger import LoggerHelper
-from messages import Messages
-
-from config import Config
+from .auto_clicker import AutoClicker
+from .config import Config
+from .exceptions import AutoHoldClickException
+from .exit_codes import ExitCodes
+from .logger import LoggerHelper
+from .messages import Messages
 
 
 def get_logger(log_settings_file_path: str) -> logging.Logger:

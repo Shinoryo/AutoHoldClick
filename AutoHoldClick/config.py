@@ -1,9 +1,10 @@
 import json
 
-from exceptions import AutoHoldClickException
-from logger import LoggerHelper
-from messages import Messages
 from pynput import keyboard, mouse
+
+from .exceptions import AutoHoldClickException
+from .logger import LoggerHelper
+from .messages import Messages
 
 
 class Config:

@@ -1,13 +1,12 @@
-
 import atexit
 import logging
 import time
 
-from logger import LoggerHelper
-from messages import Messages
 from pynput import keyboard, mouse
 
-from config import Config
+from .config import Config
+from .logger import LoggerHelper
+from .messages import Messages
 
 
 class AutoClicker:
