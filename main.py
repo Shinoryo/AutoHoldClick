@@ -305,7 +305,7 @@ def get_logger(log_settings_file_path: str) -> logging.Logger:
         logging.Logger: ロガー
     """
     try:
-        with open(log_settings_file_path, "r", encoding="utf_8") as log_settings_file:
+        with open(log_settings_file_path, "r", encoding="utf-8") as log_settings_file:
             log_settings = json.load(log_settings_file)
         logging.config.dictConfig(log_settings)
         return logging.getLogger(__name__)
