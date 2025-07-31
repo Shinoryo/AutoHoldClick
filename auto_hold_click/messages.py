@@ -12,10 +12,10 @@ class Messages:
     CTRL_C_PRESSED = "Ctrl+C が押されました"
 
     # 引数関連メッセージ
-    INVALID_ARGUMENTS = "無効な引数が指定されました。正しい引数の指定方法: --config <設定ファイルパス> [--log-settings <ログ設定ファイルパス>]"
+    INVALID_ARGUMENTS = "無効な引数が指定されました。正しい引数の指定方法: --config <設定ファイルパス> [--log-settings <ログ設定ファイルパス>]"  # noqa: E501
 
     # 設定関連メッセージ
-    CONFIG_LOAD_SUCCESS = "設定ファイルの読み込みに成功しました: トグルキー={toggle_key}, マウスボタン={mouse_button}"
+    CONFIG_LOAD_SUCCESS = "設定ファイルの読み込みに成功しました: トグルキー={toggle_key}, マウスボタン={mouse_button}"  # noqa: E501
     CONFIG_FILE_NOT_FOUND = "設定ファイルが見つかりません。パス: {file_path}"
     CONFIG_INVALID_JSON = "設定ファイルのJSON形式が不正です。パス: {file_path}"
     CONFIG_LOAD_IO_ERROR = "設定ファイルの読み込み中にIOエラーが発生しました: {error}"
@@ -28,12 +28,12 @@ class Messages:
     CLICK_STOP_LOG = "{button_name}クリックを解除しました。"
 
     # ログ関連メッセージ
-    LOGGER_LOAD_SPECIFIC_ERROR = "ログ設定ファイルの読み込み中に例外が発生しました。パス: {file_path}"
-    LOGGER_LOAD_UNEXPECTED_ERROR = "ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス: {file_path}"
+    LOGGER_LOAD_SPECIFIC_ERROR = "ログ設定ファイルの読み込み中に例外が発生しました。パス: {file_path}"  # noqa: E501
+    LOGGER_LOAD_UNEXPECTED_ERROR = "ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス: {file_path}"  # noqa: E501
     LOGGER_FILE_NOT_FOUND = "ログ設定ファイルが見つかりません。パス: {file_path}"
     LOGGER_INVALID_JSON = "ログ設定ファイルのJSON形式が不正です。パス: {file_path}"
-    LOGGER_LOAD_IO_ERROR = "ログ設定ファイルの読み込み中にIOエラーが発生しました。パス: {file_path}"
+    LOGGER_LOAD_IO_ERROR = "ログ設定ファイルの読み込み中にIOエラーが発生しました。パス: {file_path}"  # noqa: E501
 
     # 例外メッセージ
-    UNEXPECTED_ERROR = "ツール実行中に予期せぬ例外が発生しました。エラーメッセージ: {error}"
+    UNEXPECTED_ERROR = "ツール実行中に予期せぬ例外が発生しました。エラーメッセージ: {error}"  # noqa: E501
     SPECIFIC_ERROR = "ツール実行中に例外が発生しました。エラーメッセージ: {error}"
