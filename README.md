@@ -203,7 +203,7 @@
 - OS：Microsoft Windows 11 Home
 - CPU：Intel64 Family 6 Model 154 Stepping 3 GenuineIntel ~2100 Mhz
 - メモリー：16 GB
-- Python 3.11.4
+- Python 3.12.10
 - 使用ライブラリー
   - pynput==1.8.1
   - six==1.17.0
