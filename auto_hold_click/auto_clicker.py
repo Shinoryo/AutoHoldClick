@@ -2,11 +2,11 @@ import atexit
 import logging
 import time
 
+from logger import LoggerHelper
+from messages import Messages
 from pynput import keyboard, mouse
 
-from .config import Config
-from .logger import LoggerHelper
-from .messages import Messages
+from config import Config
 
 
 class AutoClicker:
@@ -79,7 +79,7 @@ class AutoClicker:
         self.mouse_controller.press(self.config.mouse_button)
         self.clicking = True
         self.logger_helper.debug(
-            Messages.CLICK_START_LOG.format(button_name=self.config.mouse_button.name)
+            Messages.CLICK_START_LOG.format(button_name=self.config.mouse_button.name),
         )
 
     def _stop_clicking(self) -> None:
@@ -89,5 +89,5 @@ class AutoClicker:
         self.mouse_controller.release(self.config.mouse_button)
         self.clicking = False
         self.logger_helper.debug(
-            Messages.CLICK_STOP_LOG.format(button_name=self.config.mouse_button.name)
+            Messages.CLICK_STOP_LOG.format(button_name=self.config.mouse_button.name),
         )

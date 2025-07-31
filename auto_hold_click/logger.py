@@ -6,17 +6,20 @@ class LoggerHelper:
     """
     ログ出力を補助するクラス。
 
-    logging.Logger オブジェクトをラップし、info/debug/exceptionの各ログ出力メソッドを提供します。
+    logging.Logger オブジェクトをラップし、
+    info/debug/exceptionの各ログ出力メソッドを提供します。
     loggerがNoneの場合はprintで出力します。
 
     Args:
-        logger (Optional[logging.Logger]): ログ出力に使用するLogger。Noneの場合はprint出力。
+        logger (Optional[logging.Logger]): ログ出力に使用するLogger。
+            Noneの場合はprint出力。
     """
 
     def __init__(self, logger: logging.Logger | None = None) -> None:
         """
         Args:
-            logger (Optional[logging.Logger]): ログ出力に使用するLogger。Noneの場合はprint出力。
+            logger (Optional[logging.Logger]):
+                ログ出力に使用するLogger。Noneの場合はprint出力。
         """
         self.logger = logger
 

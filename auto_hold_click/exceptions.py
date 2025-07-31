@@ -1,4 +1,4 @@
-class AutoHoldClickException(Exception):
+class AutoHoldClickError(Exception):
     """
     AutoHoldClick用の独自例外クラス。
 
