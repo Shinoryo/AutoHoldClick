@@ -196,7 +196,7 @@
 | ライブラリ名 | バージョン | ライセンス |
 | ---- | ---- | ---- |
 | pynput | 1.8.1 | GNU Lesser General Public License v3 |
-| six | 1.17.0 | MIT |
+| six | 1.17.0 | MIT LICENSE |
 
 ## 検証環境
 
