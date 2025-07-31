@@ -1,6 +1,13 @@
 class ExitCodes:
-    """終了コードを定数として管理するクラス"""
+    """
+    終了コードを定数として管理するクラス。
 
-    SUCCESS = 0
-    SPECIFIC_ERROR = 1
-    UNEXPECTED_ERROR = 2
+    Attributes:
+        SUCCESS (int): 正常終了。
+        SPECIFIC_ERROR (int): 特定のエラー。
+        UNEXPECTED_ERROR (int): 予期しないエラー。
+    """
+
+    SUCCESS: int = 0  # 正常終了
+    SPECIFIC_ERROR: int = 1  # 特定のエラー
+    UNEXPECTED_ERROR: int = 2  # 予期しないエラー

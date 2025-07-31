@@ -1,9 +1,13 @@
+
 import atexit
+import logging
 import time
 
 from logger import LoggerHelper
 from messages import Messages
 from pynput import keyboard, mouse
+
+from config import Config
 
 
 class AutoClicker:
@@ -16,7 +20,7 @@ class AutoClicker:
         clicking (bool): クリック状態を示すフラグ。
     """
 
-    def __init__(self, config, logger=None) -> None:
+    def __init__(self, config: Config, logger: logging.Logger) -> None:
         """初期化メソッド
 
         Args:
@@ -62,15 +66,17 @@ class AutoClicker:
                 self._stop_clicking()
 
     def release_click(self) -> None:
-        """クリックを解除するメソッド
-
-        クリックがONのときはOFFにする。
+        """
+        クリック状態がONならOFFにする。
+        プログラム終了時の後処理用。
         """
         if self.clicking:
             self._stop_clicking()
 
     def _start_clicking(self) -> None:
-        """クリックを開始するヘルパーメソッド。"""
+        """
+        マウスボタンを押し続ける状態にする。
+        """
         self.mouse_controller.press(self.config.mouse_button)
         self.clicking = True
         self.logger_helper.debug(
@@ -78,7 +84,9 @@ class AutoClicker:
         )
 
     def _stop_clicking(self) -> None:
-        """クリックを停止するヘルパーメソッド。"""
+        """
+        マウスボタンの押下を解除する。
+        """
         self.mouse_controller.release(self.config.mouse_button)
         self.clicking = False
         self.logger_helper.debug(

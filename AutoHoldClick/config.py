@@ -1,4 +1,3 @@
-
 import json
 
 from exceptions import AutoHoldClickException
@@ -30,25 +29,23 @@ class Config:
     MOUSE_BUTTON_KEY = "mouse_button"
     CONFIG_FILE_ENCODING = "utf-8"
 
-    def __init__(
-        self, config_file: str = "config\config.json", logger=None
-    ) -> None:
-        """初期化メソッド
+    def __init__(self, config_file: str, logger_helper: LoggerHelper = None) -> None:
+        """
+        コンフィグクラスの初期化
 
         Args:
-            config_file (str): 設定ファイルのパス。デフォルトは 'config.json'。
-            logger (logging.Logger): ログ出力用のロガー。
+            config_file (str): 設定ファイルのパス。
+            logger_helper (LoggerHelper, optional): ログ出力用のLoggerHelper。デフォルトはNone。
         """
         self.config_file = config_file
-        self.logger_helper = LoggerHelper(logger)
+        self.logger_helper = logger_helper
         self.toggle_key = None
         self.mouse_button = None
         self._config = None
 
     def load(self) -> None:
-        """設定ファイルを読み込むメソッド
-
-        設定ファイルからトグルキーとマウスボタンの設定を読み込む。
+        """
+        設定ファイルを読み込む
 
         Raises:
             AutoHoldClickException: 設定ファイルの読み込みに失敗した場合。
@@ -80,7 +77,8 @@ class Config:
             ) from e
 
     def _get_config_value(self, key: str) -> str:
-        """設定値を取得するメソッド
+        """
+        設定値を取得する
 
         Args:
             key (str): 設定項目のキー。
@@ -96,7 +94,8 @@ class Config:
         return value
 
     def _get_config_value_as_key(self, key: str) -> keyboard.Key:
-        """設定値をkeyboard.Keyとして取得するメソッド
+        """
+        設定値を keyboard.Key 型で取得する
 
         Args:
             key (str): 設定項目のキー。
@@ -113,7 +112,8 @@ class Config:
             ) from e
 
     def _get_config_value_as_button(self, key: str) -> mouse.Button:
-        """設定値をmouse.Buttonとして取得するメソッド
+        """
+        設定値を mouse.Button 型で取得する
 
         Args:
             key (str): 設定項目のキー。

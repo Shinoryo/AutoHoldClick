@@ -1,5 +1,6 @@
 class Messages:
-    """メッセージ定数をまとめたクラス。
+    """
+    メッセージ定数をまとめたクラス。
 
     このクラスは、アプリケーション内で使用されるメッセージを一元管理します。
     """
@@ -24,20 +25,12 @@ class Messages:
     CLICK_STOP_LOG = "{button_name}クリックを解除しました。"
 
     # ログ関連メッセージ
-    LOGGER_LOAD_SPECIFIC_ERROR = (
-        "ログ設定ファイルの読み込み中に例外が発生しました。パス：{file_path}"
-    )
-    LOGGER_LOAD_UNEXPECTED_ERROR = (
-        "ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス：{file_path}"
-    )
+    LOGGER_LOAD_SPECIFIC_ERROR = "ログ設定ファイルの読み込み中に例外が発生しました。パス：{file_path}"
+    LOGGER_LOAD_UNEXPECTED_ERROR = "ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス：{file_path}"
     LOGGER_FILE_NOT_FOUND = "ログ設定ファイルが見つかりません。パス：{file_path}"
     LOGGER_INVALID_JSON = "ログ設定ファイルのJSON形式が不正です。パス：{file_path}"
-    LOGGER_LOAD_IO_ERROR = (
-        "ログ設定ファイルの読み込み中にIOエラーが発生しました。パス：{file_path}"
-    )
+    LOGGER_LOAD_IO_ERROR = "ログ設定ファイルの読み込み中にIOエラーが発生しました。パス：{file_path}"
 
     # 例外メッセージ
-    UNEXPECTED_ERROR = (
-        "ツール実行中に予期せぬ例外が発生しました。エラーメッセージ：{error}"
-    )
+    UNEXPECTED_ERROR = "ツール実行中に予期せぬ例外が発生しました。エラーメッセージ：{error}"
     SPECIFIC_ERROR = "ツール実行中に例外が発生しました。エラーメッセージ：{error}"
