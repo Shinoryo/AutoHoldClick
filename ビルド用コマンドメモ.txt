@@ -1,0 +1,3 @@
+﻿pyinstaller .\auto_hold_click\main.py --clean --onedir --debug noarchive
+
+configフォルダー、LICENSESフォルダー、README.mdをコピーして、zip化して配布
