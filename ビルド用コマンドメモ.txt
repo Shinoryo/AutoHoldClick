@@ -1,7 +1,8 @@
-﻿pyinstaller .\auto_hold_click\main.py --clean --onedir --debug noarchive
+﻿pyinstaller .\auto_hold_click\main.py --clean --onedir --debug noarchive --name AutoHoldClick
 
 1. configフォルダーをコピー
 2. LICENSESフォルダーをコピー
 3. README.mdをコピー
-4. logフォルダーを新規作成
-5. zip化して配布
+4. LICENSEをコピー
+5. logフォルダーを新規作成
+6. zip化して配布
