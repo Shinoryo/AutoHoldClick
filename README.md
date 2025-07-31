@@ -30,15 +30,21 @@
   - pynput
   - six
 
-## 検証環境
+## 実行方法
 
-- OS：Microsoft Windows 11 Home
-- CPU：Intel64 Family 6 Model 154 Stepping 3 GenuineIntel ~2100 Mhz
-- メモリー：16 GB
-- Python 3.11.4
-- 使用ライブラリー
-  - pynput==1.8.1
-  - six==1.17.0
+1. 必要なPythonライブラリをインストールします（初回のみ）:
+
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+2. ツールを実行します:
+
+   ```powershell
+   python AutoHoldClick/main.py
+   ```
+
+3. 設定ファイルやログ設定ファイルは、`Config`フォルダー内の`config.json`および`log_settings.json`を編集してください。
 
 ## 処理詳細
 
@@ -189,12 +195,15 @@
 | pynput | 1.8.1 | GNU Lesser General Public License v3 |
 | six | 1.17.0 | MIT |
 
-## 開発詳細
+## 検証環境
 
-### 開発環境
-
-- VSCode バージョン 1.102.3
+- OS：Microsoft Windows 11 Home
+- CPU：Intel64 Family 6 Model 154 Stepping 3 GenuineIntel ~2100 Mhz
+- メモリー：16 GB
 - Python 3.11.4
+- 使用ライブラリー
+  - pynput==1.8.1
+  - six==1.17.0
 
 ## 改訂履歴
 
