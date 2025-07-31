@@ -83,7 +83,8 @@ class Config:
                 log_info(
                     self.logger,
                     Messages.CONFIG_LOAD_SUCCESS.format(
-                        toggle_key=self.toggle_key.name, mouse_button=self.mouse_button.name
+                        toggle_key=self.toggle_key.name,
+                        mouse_button=self.mouse_button.name,
                     ),
                 )
         except FileNotFoundError as e:
