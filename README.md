@@ -199,18 +199,6 @@
 | pynput | 1.8.1 | GNU Lesser General Public License v3 |
 | six | 1.17.0 | MIT License |
 
-### 使用ライブラリーのライセンス(ビルド用)
-
-| ライブラリ名 | バージョン | ライセンス |
-| ---- | ---- | ---- |
-| altgraph | 0.17.4 | MIT License |
-| packaging | 25.0 | Apache License 2.0 |
-| pefile | 2023.2.7 | MIT License |
-| pyinstaller | 6.14.2 | GNU General Public License v2 |
-| pyinstaller-hooks-contrib | 2025.8 | GNU General Public License v2 |
-| pywin32-ctypes | 0.2.3 | BSD-3-Clause |
-| setuptools | 80.9.0 | MIT License |
-
 ## 検証環境
 
 - OS：Microsoft Windows 11 Home
