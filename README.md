@@ -34,9 +34,9 @@
 
 1. 必要なPythonライブラリをインストールします（初回のみ）:
 
-   ```powershell
-   pip install -r requirements.txt
-   ```
+    ```powershell
+    pip install -r requirements.txt
+    ```
 
 2. ツールを実行します:
 
