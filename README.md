@@ -40,14 +40,14 @@
 
 2. ツールを実行します:
 
-   ```powershell
-   python AutoHoldClick/main.py --config Config/config.json --log-settings Config/log_settings.json
-   ```
+    ```powershell
+    python auto_hold_click/main.py --config config/config.json --log-settings config/log_settings.json
+    ```
 
-   - `--config` は必須です。設定ファイルのパスを指定してください。
-   - `--log-settings` は任意です。指定しない場合は標準出力のみでログファイルは生成されません。
+    - `--config` は必須です。設定ファイルのパスを指定してください。
+    - `--log-settings` は任意です。指定しない場合は標準出力のみでログファイルは生成されません。
 
-3. 設定ファイルやログ設定ファイルは、`Config`フォルダー内の`config.json`および`log_settings.json`を編集してください。
+3. 設定ファイルやログ設定ファイルは、`config`フォルダー内の`config.json`および`log_settings.json`を編集してください。
 
 ## 処理詳細
 
@@ -76,7 +76,7 @@
 
 | 項目 | 説明 |
 | --- | --- |
-| ファイルパス(実行フォルダーからの相対) | `config.json` |
+| ファイルパス(実行フォルダーからの相対) | `config/config.json` |
 | ファイル形式 | テキスト(JSON) |
 | 文字コード | UTF-8(BOMなし) |
 
@@ -93,7 +93,7 @@
 
 | 項目 | 説明 |
 | --- | --- |
-| ファイルパス(実行フォルダーからの相対) | `log_settings.json` |
+| ファイルパス(実行フォルダーからの相対) | `config/log_settings.json` |
 | ファイル形式 | テキスト(JSON) |
 | 文字コード | UTF-8(BOMなし) |
 
@@ -140,7 +140,7 @@
 
 | 項目 | 説明 |
 | --- | --- |
-| ファイルパス(実行フォルダーからの相対) | `log\AutoHoldClick.log` |
+| ファイルパス(実行フォルダーからの相対) | `log/AutoHoldClick.log` |
 | ファイル形式 | テキスト |
 | 文字コード | UTF-8(BOMなし) |
 
