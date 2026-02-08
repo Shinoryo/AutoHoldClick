@@ -1,4 +1,4 @@
-"""auto_hold_click/exception.py
+"""auto_hold_click/exceptions.py
 
 Copyright (c) 2026 Shinoryo
 Licensed under the MIT License
