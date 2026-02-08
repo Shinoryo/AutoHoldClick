@@ -1,3 +1,9 @@
+"""auto_hold_click/auto_clicker.py
+
+Copyright (c) 2026 Shinoryo
+Licensed under the MIT License
+"""
+
 import atexit
 import logging
 import time

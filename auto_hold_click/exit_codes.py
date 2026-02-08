@@ -1,3 +1,9 @@
+"""auto_hold_click/exit_codes.py
+
+Copyright (c) 2026 Shinoryo
+Licensed under the MIT License
+"""
+
 class ExitCodes:
     """
     終了コードを定数として管理するクラス。
