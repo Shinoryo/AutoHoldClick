@@ -34,20 +34,20 @@
 
 1. 必要なPythonライブラリをインストールします（初回のみ）:
 
-   ```powershell
-   pip install -r requirements.txt
-   ```
+    ```powershell
+    pip install -r requirements.txt
+    ```
 
 2. ツールを実行します:
 
-   ```powershell
-   python AutoHoldClick/main.py --config Config/config.json --log-settings Config/log_settings.json
-   ```
+    ```powershell
+    python auto_hold_click/main.py --config config/config.json --log-settings config/log_settings.json
+    ```
 
-   - `--config` は必須です。設定ファイルのパスを指定してください。
-   - `--log-settings` は任意です。指定しない場合は標準出力のみでログファイルは生成されません。
+    - `--config` は必須です。設定ファイルのパスを指定してください。
+    - `--log-settings` は任意です。指定しない場合は標準出力のみでログファイルは生成されません。
 
-3. 設定ファイルやログ設定ファイルは、`Config`フォルダー内の`config.json`および`log_settings.json`を編集してください。
+3. 設定ファイルやログ設定ファイルは、`config`フォルダー内の`config.json`および`log_settings.json`を編集してください。
 
 ## 処理詳細
 
@@ -76,7 +76,7 @@
 
 | 項目 | 説明 |
 | --- | --- |
-| ファイルパス(実行フォルダーからの相対) | `config.json` |
+| ファイルパス(実行フォルダーからの相対) | `config/config.json` |
 | ファイル形式 | テキスト(JSON) |
 | 文字コード | UTF-8(BOMなし) |
 
@@ -93,7 +93,7 @@
 
 | 項目 | 説明 |
 | --- | --- |
-| ファイルパス(実行フォルダーからの相対) | `log_settings.json` |
+| ファイルパス(実行フォルダーからの相対) | `config/log_settings.json` |
 | ファイル形式 | テキスト(JSON) |
 | 文字コード | UTF-8(BOMなし) |
 
@@ -140,7 +140,7 @@
 
 | 項目 | 説明 |
 | --- | --- |
-| ファイルパス(実行フォルダーからの相対) | `log\AutoHoldClick.log` |
+| ファイルパス(実行フォルダーからの相対) | `log/AutoHoldClick.log` |
 | ファイル形式 | テキスト |
 | 文字コード | UTF-8(BOMなし) |
 
@@ -156,32 +156,32 @@
 
 ## ログメッセージ
 
-| No. | 種別   | ログ内容(表示/記録される内容) |
-|----|--------|----------------------------------------------|
-| 1 | 情報   | 処理開始 |
-| 2 | 情報   | 設定ファイルの読み込みに成功しました:トグルキー={toggle_key}, マウスボタン={mouse_button} |
-| 3 | 情報   | トグルキーでクリックON/OFFします（Ctrl+Cで終了） |
-| 4 | 情報   | 処理終了 |
+| No. | 種別 | ログ内容(表示/記録される内容) |
+| --- | --- | --- |
+| 1 | 情報 | 処理開始 |
+| 2 | 情報 | 設定ファイルの読み込みに成功しました: トグルキー={toggle_key}, マウスボタン={mouse_button} |
+| 3 | 情報 | トグルキーでクリックON/OFFします (Ctrl+Cで終了) |
+| 4 | 情報 | 処理終了 |
 | 5 | デバッグ | {button_name}クリックを開始しました。 |
 | 6 | デバッグ | {button_name}クリックを解除しました。 |
-| 7 | エラー  | ツール実行中に予期せぬ例外が発生しました。エラーメッセージ：{error} |
-| 8 | エラー  | ツール実行中に例外が発生しました。エラーメッセージ：{error} |
-| 9 | エラー  | ログ設定ファイルの読み込み中に例外が発生しました。パス：{file_path} |
-| 10 | エラー  | ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス：{file_path} |
-| 11 | エラー  | ログ設定ファイルの読み込み中にIOエラーが発生しました。パス：{file_path} |
-| 12 | エラー  | ログ設定ファイルが見つかりません。パス：{file_path} |
-| 13 | エラー  | ログ設定ファイルのJSON形式が不正です。パス：{file_path} |
-| 14 | エラー  | 設定ファイルが見つかりません。パス：{file_path} |
-| 15 | エラー  | 設定ファイルのJSON形式が不正です。パス：{file_path} |
-| 16 | エラー  | 設定ファイルの読み込み中にIOエラーが発生しました: {error} |
-| 17 | エラー  | 設定項目が見つかりません。設定項目：{key} |
-| 18 | エラー  | 設定項目の値が空です。設定項目：{key} |
-| 19 | エラー  | 設定項目の値が不正です。設定項目：{key}, 設定値：{value} |
+| 7 | エラー | ツール実行中に予期せぬ例外が発生しました。エラーメッセージ: {error} |
+| 8 | エラー | ツール実行中に例外が発生しました。エラーメッセージ: {error} |
+| 9 | エラー | ログ設定ファイルの読み込み中に例外が発生しました。パス: {file_path} |
+| 10 | エラー | ログ設定ファイルの読み込み中に予期せぬ例外が発生しました。パス: {file_path} |
+| 11 | エラー | ログ設定ファイルの読み込み中にIOエラーが発生しました。パス: {file_path} |
+| 12 | エラー | ログ設定ファイルが見つかりません。パス: {file_path} |
+| 13 | エラー | ログ設定ファイルのJSON形式が不正です。パス: {file_path} |
+| 14 | エラー | 設定ファイルが見つかりません。パス: {file_path} |
+| 15 | エラー | 設定ファイルのJSON形式が不正です。パス: {file_path} |
+| 16 | エラー | 設定ファイルの読み込み中にIOエラーが発生しました: {error} |
+| 17 | エラー | 設定項目が見つかりません。設定項目: {key} |
+| 18 | エラー | 設定項目の値が空です。設定項目: {key} |
+| 19 | エラー | 設定項目の値が不正です。設定項目: {key}, 設定値: {value} |
 
 ## 終了コード
 
 | 終了コード | 名前 | 説明 |
-|---|---|---|
+| --- | --- | --- |
 | 0 | SUCCESS | 正常に終了した場合 |
 | 1 | SPECIFIC_ERROR | 例外が発生した場合 |
 | 2 | UNEXPECTED_ERROR | 予期しない例外が発生した場合 |
@@ -198,18 +198,6 @@
 | ---- | ---- | ---- |
 | pynput | 1.8.1 | GNU Lesser General Public License v3 |
 | six | 1.17.0 | MIT License |
-
-### 使用ライブラリーのライセンス(ビルド用)
-
-| ライブラリ名 | バージョン | ライセンス |
-| ---- | ---- | ---- |
-| altgraph | 0.17.4 | MIT License |
-| packaging | 25.0 | Apache License 2.0 |
-| pefile | 2023.2.7 | MIT License |
-| pyinstaller | 6.14.2 | GNU General Public License v2 |
-| pyinstaller-hooks-contrib | 2025.8 | GNU General Public License v2 |
-| pywin32-ctypes | 0.2.3 | BSD-3-Clause |
-| setuptools | 80.9.0 | MIT License |
 
 ## 検証環境
 
