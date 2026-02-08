@@ -1,3 +1,9 @@
+"""auto_hold_click/messages.py
+
+Copyright (c) 2026 Shinoryo
+Licensed under the MIT License
+"""
+
 class Messages:
     """
     メッセージ定数をまとめたクラス。

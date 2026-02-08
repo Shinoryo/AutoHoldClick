@@ -1,6 +1,6 @@
-"""AutoHoldClick
+"""auto_hold_click/main.py
 
-Copyright (c) 2025 Shinoryo
+Copyright (c) 2026 Shinoryo
 Licensed under the MIT License
 """
 

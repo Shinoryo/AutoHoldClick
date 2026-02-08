@@ -1,3 +1,9 @@
+"""auto_hold_click/config.py
+
+Copyright (c) 2026 Shinoryo
+Licensed under the MIT License
+"""
+
 import json
 from pathlib import Path
 
