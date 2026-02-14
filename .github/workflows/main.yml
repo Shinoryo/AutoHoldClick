@@ -27,19 +27,19 @@ jobs:
       - name: Build with Nuitka
         uses: Nuitka/Nuitka-Action@v1.4
         with:
-          script-name: HtmlToMarkdownConverter/HtmlToMarkdownConverter.py
+          script-name: auto_hold_click/auto_hold_click.py
           mode: standalone
           output-dir: build
 
       - name: Zip artifact
         run: |
           $TAG = "${{ github.event.release.tag_name }}"
-          $ZIP_NAME = "HtmlToMarkdownConverter-$TAG.zip"
+          $ZIP_NAME = "auto_hold_click-$TAG.zip"
           Compress-Archive `
-            -Path build/HtmlToMarkdownConverter.dist/*, README.md `
+            -Path build/auto_hold_click.dist/*, README.md, config `
             -DestinationPath $ZIP_NAME
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
-          files: HtmlToMarkdownConverter-${{ github.event.release.tag_name }}.zip
+          files: auto_hold_click-${{ github.event.release.tag_name }}.zip
