@@ -41,7 +41,7 @@
 2. ツールを実行します:
 
     ```powershell
-    python auto_hold_click/main.py --config config/config.json --log-settings config/log_settings.json
+    auto_hold_click.exe --config config/config.json --log-settings config/log_settings.json
     ```
 
     - `--config` は必須です。設定ファイルのパスを指定してください。
