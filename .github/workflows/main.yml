@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-  
+
       - name: Build with Nuitka
         uses: Nuitka/Nuitka-Action@v1.4
         with:
