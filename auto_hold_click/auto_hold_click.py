@@ -1,4 +1,4 @@
-"""auto_hold_click/main.py
+"""auto_hold_click/auto_hold_click.py
 
 Copyright (c) 2026 Shinoryo
 Licensed under the MIT License
