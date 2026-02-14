@@ -1,0 +1,45 @@
+name: Build and Release
+
+permissions:
+  contents: write
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v6.0.2
+
+      - name: Set up Python
+        uses: actions/setup-python@v6.2.0
+        with:
+          python-version-file: .python-version
+          architecture: x64
+  
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+  
+      - name: Build with Nuitka
+        uses: Nuitka/Nuitka-Action@v1.4
+        with:
+          script-name: HtmlToMarkdownConverter/HtmlToMarkdownConverter.py
+          mode: standalone
+          output-dir: build
+
+      - name: Zip artifact
+        run: |
+          $TAG = "${{ github.event.release.tag_name }}"
+          $ZIP_NAME = "HtmlToMarkdownConverter-$TAG.zip"
+          Compress-Archive `
+            -Path build/HtmlToMarkdownConverter.dist/*, README.md `
+            -DestinationPath $ZIP_NAME
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: HtmlToMarkdownConverter-${{ github.event.release.tag_name }}.zip
